@@ -1,0 +1,12 @@
+# Mac OS X crap
+*.DS_Store
+
+# NPM modules
+node_modules/
+
+# Generated files
+build/
+.sass-cache/
+
+# SVN files
+.svn

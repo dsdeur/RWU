@@ -1,0 +1,12 @@
+{
+  "name": "RWU",
+  "description": "Remote workers united",
+  "version": "0.0.1",
+  "private": true,
+  "dependencies": {
+    "body-parser": "^1.8.1",
+    "express": "4.x",
+    "react": "^0.11.1",
+    "socket.io": "^1.1.0"
+  }
+}
