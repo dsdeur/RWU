@@ -50,9 +50,6 @@ $(function() {
 
         setTimeout(looper, 30000);
     }
-    function countDown(i) {
-        
-    }
 
     function uploadImage(snapshot) {
         var img = snapshot.toDataURL('image/jpeg');
