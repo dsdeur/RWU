@@ -39,6 +39,15 @@ $(function() {
     function looper() {
         console.log('loop');
         sayCheese.takeSnapshot(350, 260);
+
+        var self = $('#self');
+        self.css("transition", "none");
+        self.css("border-radius", 120);
+        setTimeout(function() {
+            self.css("transition", "30s linear");
+            self.css("border-radius", 3);
+        }, 0);
+
         setTimeout(looper, 30000);
     }
 
