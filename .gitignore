@@ -10,3 +10,5 @@ build/
 
 # SVN files
 .svn
+
+public/images
