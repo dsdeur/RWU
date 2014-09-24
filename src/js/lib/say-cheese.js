@@ -159,7 +159,7 @@ var SayCheese = (function() {
         }
       }
 
-      this.element.appendChild(this.video);
+      //this.element.appendChild(this.video);
       this.video.play();
     }.bind(this);
 

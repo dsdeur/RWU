@@ -8,5 +8,34 @@
     "express": "4.x",
     "react": "^0.11.1",
     "socket.io": "^1.1.0"
+  },
+  "devDependencies": {
+    "browser-sync": "^1.1.0",
+    "browserify": "^4.1.11",
+    "browserify-shim": "^3.7.0",
+    "gulp": "^3.8.1",
+    "gulp-compass": "^1.1.9",
+    "gulp-concat": "^2.2.0",
+    "gulp-gzip": "0.0.8",
+    "gulp-imagemin": "^0.6.1",
+    "gulp-plumber": "^0.6.3",
+    "gulp-shell": "^0.2.9",
+    "gulp-streamify": "0.0.5",
+    "gulp-uglify": "^0.3.1",
+    "gulp-util": "^2.2.17",
+    "reactify": "^0.13.1",
+    "socket.io-client": "^1.1.0",
+    "vinyl-source-stream": "^0.1.1"
+  },
+  "browser": {
+    "say-cheese": "./src/js/lib/say-cheese.js"
+  },
+  "browserify-shim": {
+    "say-cheese": "SayCheese"
+  },
+  "browserify": {
+    "transform": [
+      "browserify-shim"
+    ]
   }
 }

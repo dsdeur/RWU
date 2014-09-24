@@ -1,0 +1,57 @@
+$primary-color: #e63247;
+$primary-color: #f54d5b;
+$background-color: #1f1f1f;
+
+
+
+
+// Variables and Imports
+//
+// If you have a base partial (or equivalent), you should move these lines to
+// that file. NOTE: Edit the lines to remove "!default".
+// @see http://compass-style.org/help/tutorials/best_practices/
+// =============================================================================
+
+// These 3 variables are copies of ones used in Compass' Vertical Rhythm module.
+
+// The base font size.
+$base-font-size: 16px !default;
+
+// The base line height determines the basic unit of vertical rhythm.
+$base-line-height: 24px !default;
+
+// The length unit in which to output vertical rhythm values.
+// Supported values: px, em, rem.
+$rhythm-unit: 'em' !default;
+
+// This variable is a copy of the one used in Compass' support module.
+
+// Optional map of minimum browser versions to support. For example, to
+// remove support for IE 7 and earlier, set $browser-minimum-versions['ie']
+// to '8'.
+$browser-minimum-versions: (
+    'chrome':  null,
+    'firefox': null,
+    'ie':      null,
+    'safari':  null,
+    'opera':   null
+) !default;
+
+
+// Set this to true to force CSS output to exactly match normalize.css.
+$strict-normalize: true !default;
+
+// The default font family.
+$base-font-family: sans-serif !default;
+
+// The font sizes for h1-h6.
+$h1-font-size: 2    * $base-font-size !default;
+$h2-font-size: 1.5  * $base-font-size !default;
+$h3-font-size: 1.17 * $base-font-size !default;
+$h4-font-size: 1    * $base-font-size !default;
+$h5-font-size: .83 * $base-font-size !default;
+$h6-font-size: .67 * $base-font-size !default;
+
+// The amount lists and blockquotes are indented.
+$indent-amount: 40px !default;
+

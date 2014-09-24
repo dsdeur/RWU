@@ -1,0 +1,22 @@
+html, 
+body {
+    background: $background-color;
+    height: 100%;
+}
+
+// Reset tap color chrome android
+* { 
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    -webkit-touch-callout: rgba(0, 0, 0, 0);
+}
+
+/* apply a natural box layout model to all elements, but allowing components to change */
+html {
+    box-sizing: border-box;
+}
+
+*,
+*:before,
+*:after {
+    box-sizing: inherit;
+}
