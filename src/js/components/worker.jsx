@@ -18,12 +18,12 @@ var Worker = React.createClass({
     componentWillReceiveProps: function(nextProps) {
         var self = this;
         if(this.props.snapshot !== nextProps.snapshot) {
-            var self = $(this.getDOMNode());
-            self.css("transition", "none");
-            self.css("border-radius", 120);
+            var DOMNode = $(this.getDOMNode());
+            DOMNode.css("transition", "none");
+            DOMNode.css("border-radius", 120);
             setTimeout(function() {
-                self.css("transition", "30s linear");
-                self.css("border-radius", 3);
+                DOMNode.css("transition", "30s linear");
+                DOMNode.css("border-radius", 3);
             }, 0);
         }
     },

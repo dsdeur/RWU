@@ -1,100 +1,97 @@
-var RWU = function() {
-    sayCheese: new SayCheese('#campreview'),
-    socket: SocketIO(),
-    me: {
+var Worker = function(id) {
+    this.id = id;
+    this.snapshot = null;
+}
+
+var RWUModel = function(socket, sayCheese) {
+    var self = this;
+    this.sayCheese = sayCheese;
+    this.socket = socket;
+    this.me = {
         id: null,
         snapshot: null
     },
-    workers: {},
+    this.workers = {};
+    
+    this.socket.on('connect', function() {
+        self.setId(this.io.engine.id);
+    });
 
-    initSayCheese: function() {
+    this.socket.on('newPic', function(data) {
+        self.newPic(data);
+    });
+
+    this.socket.on('offline', function(data) {
+        self.removeWorker(data.id)
+    });
+
+    this.sayCheese.on('start', function() {
+        looper();
+        console.log('SayCheese started');
+    });
+
+    this.sayCheese.on('error', function(error){
+        console.log('error:', error);
+    });
+
+    this.sayCheese.on('snapshot', function(snapshot){
+        snapshot = snapshot.toDataURL('image/jpeg');
+        console.log('snapshot :D');
+        self.uploadImage(snapshot);
+        self.me.snapshot = snapshot;
+        window.RWURoot.refresh();
+    });
+    
+    this.initSayCheese = function() {
         var self = this;
-
-        this.sayCheese.on('start', function() {
-            self.looper();
-            console.log('SayCheese started');
-        });
-
-        this.sayCheese.on('error', function(error){
-            console.log('error:', error);
-        });
-
-        this.sayCheese.on('snapshot', function(snapshot){
-            snapshot = snapshot.toDataURL('image/jpeg');
-            console.log('snapshot :D');
-            self.uploadImage(snapshot);
-            self.me.snapshot = snapshot;
-            console.log(window.RWURoot.refresh);
-        
-        });
 
         this.sayCheese.start();
     },
 
-    stopSayCheese: function() {
+    this.stopSayCheese = function() {
         this.sayCheese.stop();
-    },
+    }
 
-    uploadImage: function(img) {
-        var data = new FormData();
-        data.append('snapshot', img);
-        data.append('id', this.me.id);
+    this.uploadImage = function(img) {
+        var data = {
+            id: this.me.id,
+            snapshot: img
+        }
 
-        var req = new XMLHttpRequest();
-        req.open('POST', '/upload');
-        req.send(data);
-
+        this.socket.emit('snapshot', data);
+        
         console.log('upload')
     },
 
-    setId: function(id) {
-        RWU.me.id = this.io.engine.id;
-    },
+    this.setId = function(id) {
+        this.me.id = id;
+    }
 
-    newPic: function(id) {
-        if(id == this.me.id) {
+    this.newPic = function(data) {
+        if(data.id == this.me.id) {
             return;
         }
 
-        this.workers[id] = this.workers[id] || new Worker(id);
-        this.workers[id].snapshot = '/images/' + id + '.jpg' + '?' + Date.now();
+        this.workers[data.id] = this.workers[data.id] || new Worker(data.id);
+        this.workers[data.id].snapshot = data.snapshot;
         
-    
+        window.RWURoot.refresh();
     },
 
-    removeWorker: function(id) {
+    this.removeWorker = function(id) {
         delete this.workers[id];
-    },
-
-    takeSnapshot: function() {
-        this.sayCheese.takeSnapshot(350, 260);
-    },
-
-    looper: function() {
-        console.log('loop');
-        this.takeSnapshot();
-        // var self = $('#self');
-        // self.css("transition", "none");
-        // self.css("border-radius", 120);
-        // setTimeout(function() {
-        //     self.css("transition", "30s linear");
-        //     self.css("border-radius", 3);
-        // }, 0);
-
-        setTimeout(this.looper, 30000);
     }
 
+    this.takeSnapshot = function() {
+        this.sayCheese.takeSnapshot(350, 260);
+    }
+    
+    function looper() {
+        console.log('loop');
+        self.takeSnapshot();
+
+        setTimeout(looper, 30000);
+    }
 }
 
-
-RWU.socket.on('connect', function() {
-    RWU.setId = this.io.engine.id;
-});
-
-RWU.socket.on('newPic', function(data) {
-   RWU.newPic(data.id)
-});
-
-RWU.socket.on('offline', function(data) {
-    RWU.removeWorker(data.id)
-});
+module.exports = RWUModel;

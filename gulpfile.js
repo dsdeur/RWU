@@ -100,7 +100,7 @@ gulp.task('build-js', function() {
     var stream = browserify({
         entries: ['./src/js/app.js'],
         extensions: ['.js', '.jsx'],
-        paths: ['./src/js/components', './src/js/lib']
+        paths: ['./src/js/components', './src/js/lib', './src/js']
     }) // browserify
         .transform(reactify)
         .bundle({debug: !gutil.env.production})
