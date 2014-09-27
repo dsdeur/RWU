@@ -49,14 +49,13 @@ var RWUModel = function() {
     }
 
     this.uploadImage = function(img) {
-        var data = new FormData();
-        data.append('snapshot', img);
-        data.append('id', this.me.id);
+        var data = {
+            id: this.me.id,
+            snapshot: img
+        }
 
-        var req = new XMLHttpRequest();
-        req.open('POST', '/upload');
-        req.send(data);
-
+        this.socket.emit('snapshot', data);
+        
         console.log('upload')
     },
 
@@ -64,13 +63,13 @@ var RWUModel = function() {
         RWU.me.id = id;
     }
 
-    this.newPic = function(id) {
-        if(id == this.me.id) {
+    this.newPic = function(data) {
+        if(data.id == this.me.id) {
             return;
         }
 
-        this.workers[id] = this.workers[id] || new Worker(id);
-        this.workers[id].snapshot = '/images/' + id + '.jpg' + '?' + Date.now();
+        this.workers[data.id] = this.workers[data.id] || new Worker(data.id);
+        this.workers[data.id].snapshot = data.snapshot;
         
         window.RWURoot.refresh();
     },
@@ -97,7 +96,8 @@ RWU.socket.on('connect', function() {
 });
 
 RWU.socket.on('newPic', function(data) {
-   RWU.newPic(data.id)
+    console.log(data);
+    RWU.newPic(data);
 });
 
 RWU.socket.on('offline', function(data) {
