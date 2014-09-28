@@ -19,7 +19,7 @@ var WorkerContainer = React.createClass({
         }
 
         return (
-            <div>
+            <div className="workers-container">
                 {workers}
             </div>
         );
