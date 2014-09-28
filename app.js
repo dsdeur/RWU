@@ -1,7 +1,7 @@
 var server = require('http').createServer(handler);
 var io = require('socket.io')(server);
 var static = require('node-static');
-var fileServer = new static.Server('./public');
+var fileServer = new static.Server(__dirname + '/public');
 
 function handler(req, res) {
     req.addListener('end', function() {
