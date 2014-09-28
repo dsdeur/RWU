@@ -21,7 +21,9 @@ var RWURoot = React.createClass({
         }
 
         return (
-            <WorkersContainer workers={this.props.RWU.workers} me={this.props.RWU.me} />
+            <WorkersContainer workers={this.props.RWU.workers} 
+                              me={this.props.RWU.me}
+                              retakeSnaphot={this.props.RWU.retakeSnaphot} />
         );
     }
 });

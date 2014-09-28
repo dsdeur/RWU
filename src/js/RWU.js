@@ -7,12 +7,10 @@ var RWUModel = function(socket, sayCheese) {
     var self = this;
     this.sayCheese = sayCheese;
     this.socket = socket;
-    this.me = {
-        id: null,
-        snapshot: null
-    },
+    this.me = new Worker(null);
     this.workers = {};
-    
+    this.timer;
+
     this.socket.on('connect', function() {
         self.setId(this.io.engine.id);
     });
@@ -43,12 +41,11 @@ var RWUModel = function(socket, sayCheese) {
     });
     
     this.initSayCheese = function() {
-        var self = this;
-
         this.sayCheese.start();
     },
 
     this.stopSayCheese = function() {
+        clearTimeout(this.timer);
         this.sayCheese.stop();
     }
 
@@ -83,14 +80,20 @@ var RWUModel = function(socket, sayCheese) {
     }
 
     this.takeSnapshot = function() {
-        this.sayCheese.takeSnapshot(350, 260);
+        self.sayCheese.takeSnapshot(350, 260);
     }
     
+    this.retakeSnaphot = function() {
+        clearTimeout(self.timer);
+        self.takeSnapshot();
+        self.timer = setTimeout(looper, 30000);
+    }
+
     function looper() {
         console.log('loop');
         self.takeSnapshot();
 
-        setTimeout(looper, 30000);
+        self.timer = setTimeout(looper, 30000);
     }
 }
 
