@@ -9,6 +9,5 @@ window.React = require('react');
 
 var RWU = new RWUModel(SocketIO(), new SayCheese('#campreview'));
 
-document.addEventListener('DOMContentLoaded', function(){
-    window.RWURoot = React.renderComponent(RWURoot({ RWU: RWU }), document.getElementById('content'));
-});
+window.RWURoot = React.renderComponent(RWURoot({ RWU: RWU }), document.getElementById('content'));
+
